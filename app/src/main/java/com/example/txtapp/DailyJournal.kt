@@ -40,7 +40,7 @@ class DailyJournal : AppCompatActivity() {
             myRef.setValue(dailyentry)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        }
+        }//test
         exit.setOnClickListener{
             Toast.makeText(this, "exits this journal gives user prompt to either save or discard journal they have written", Toast.LENGTH_SHORT).show()
         }
