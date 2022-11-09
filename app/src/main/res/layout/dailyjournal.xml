@@ -6,26 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".DailyJournal">
 
-    <EditText
-        android:id="@+id/journalentry"
-        android:layout_width="match_parent"
-        android:layout_height="597dp"
-        android:background="@drawable/edt_background"
-        android:hint="Start Entry"
-        android:paddingLeft="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="25dp" />
 
     <Button
-        android:id="@+id/returnjournal"
-        android:layout_width="match_parent"
-        android:layout_height="136dp"
-        android:text="Submit Journal Entry"
+        android:layout_width="wrap_content"
+        android:text="Save"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/edt_background"/>
+
+
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/saveButton"
+        android:layout_marginLeft="20dp"
+        android:text="TextView"
+        android:background="@drawable/edt_background"/>
+
+
+    <EditText
+        android:id="@+id/journalentry"
+        android:layout_width="402dp"
+        android:layout_height="643dp"
+        android:layout_below="@+id/Date"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="19dp"
         android:background="@drawable/edt_background"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="595dp"
-        android:layout_marginBottom="0dp" />
+        android:hint="Write more here..."></EditText>
 
 </RelativeLayout>
