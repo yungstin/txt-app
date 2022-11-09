@@ -36,7 +36,7 @@ class DailyJournal : AppCompatActivity() {
             val dailyentry = journalBody.text.toString()
             var database = Firebase.database("https://fapwf-f785f-default-rtdb.firebaseio.com/")
             val myRef = database.getReference("Journal Entry")
-            Toast.makeText(this@DailyJournal, dailyentry, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this@DailyJournal, dailyentry, Toast.LENGTH_SHORT).show()
             myRef.setValue(dailyentry)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
