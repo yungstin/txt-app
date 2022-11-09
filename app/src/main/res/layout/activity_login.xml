@@ -62,8 +62,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 
-
-
+    <Button
+        android:id="@+id/adminskip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/email"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="126dp"
+        android:layout_toStartOf="@+id/app_logo"
+        android:text="skip login" />
 
 
 </RelativeLayout>

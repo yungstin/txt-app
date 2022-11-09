@@ -14,6 +14,7 @@ class Login : AppCompatActivity() {
     private lateinit var edtPassword: EditText
     private lateinit var btnlogin: Button
     private lateinit var btnsignup: Button
+    private lateinit var btnadminskip: Button
 
     private lateinit var phAuth: FirebaseAuth
 
@@ -30,6 +31,7 @@ class Login : AppCompatActivity() {
         edtPassword = findViewById(R.id.password)
         btnlogin = findViewById(R.id.login_btn)
         btnsignup = findViewById(R.id.signup_btn)
+        btnadminskip = findViewById(R.id.adminskip)
 
         btnsignup.setOnClickListener{
             val intent = Intent(this, SignUp::class.java)
@@ -42,6 +44,16 @@ class Login : AppCompatActivity() {
             val password = edtPassword.text.toString()
 
             login(phone, password);
+        }
+
+        btnadminskip.setOnClickListener {
+            phAuth.signInWithEmailAndPassword("temp1@gmail.com", "password")
+
+
+            val mainpage = Intent(this, MainActivity::class.java)
+            startActivity(mainpage)
+
+
         }
 
     }
