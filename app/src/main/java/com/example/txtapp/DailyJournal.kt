@@ -14,14 +14,13 @@ class DailyJournal : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dailyjournal)
 
-        dailyjournaledt = findViewById(R.id.dailyjournal)
+        dailyjournaledt = findViewById(R.id.journalentry)
+        returnbtn = findViewById(R.id.returnjournal)
+
 
         returnbtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
     }
-
-
 }

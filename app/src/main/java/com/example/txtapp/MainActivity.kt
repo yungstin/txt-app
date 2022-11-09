@@ -20,10 +20,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DailyJournal::class.java)
             startActivity(intent)
         }
-
-//        btnsignup.setOnClickListener{
-//            val intent = Intent(this, SignUp::class.java)
-//            startActivity(intent)
-//        }
     }
 }
