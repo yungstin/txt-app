@@ -38,10 +38,16 @@ class Login : AppCompatActivity() {
 
 
         btnlogin.setOnClickListener {
+            //Want to make it so that if you press enter when typing the password it tries to login
             val phone = edtemail.text.toString()
             val password = edtPassword.text.toString()
+            try {
+                login(phone, password);
+            }catch (e: java.lang.Exception)//Fixes crash that happens when login is pressed without email/password
+            {
+                Toast.makeText(this@Login, "Please enter a Username/Password", Toast.LENGTH_SHORT).show()
+            }
 
-            login(phone, password);
         }
 
     }
@@ -56,7 +62,7 @@ class Login : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(this@Login, "User does not exist", Toast.LENGTH_SHORT).show()
-
+                    // Probably need different errror for if user doesn't exist or if its a wrong password
                 }
             }
 
