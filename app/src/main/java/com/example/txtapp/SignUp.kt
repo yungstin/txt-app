@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -34,6 +35,7 @@ class SignUp : AppCompatActivity() {
 
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
 
+
         btnsignup.setOnClickListener {
             val email = edtemail.text.toString()
             val password = edtPassword.text.toString()
@@ -41,6 +43,7 @@ class SignUp : AppCompatActivity() {
             val userID = dbRef.push().key!!
 
             val sampleUser = UserModel(userID, email)
+
 
             dbRef.child(userID).setValue(sampleUser)
                 .addOnCompleteListener {

@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class Login : AppCompatActivity() {
 
+
     private lateinit var edtemail: EditText
     private lateinit var edtPassword: EditText
     private lateinit var btnlogin: Button
@@ -22,6 +23,7 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
+
 
 
         phAuth = FirebaseAuth.getInstance()
