@@ -7,6 +7,7 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
     private lateinit var btndailyjournal: Button
+    private lateinit var btnAddGroup: Button
 
 
 
@@ -20,5 +21,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DailyJournal::class.java)
             startActivity(intent)
         }
+
+        btnAddGroup = findViewById(R.id.addGroup)
+
+        btnAddGroup.setOnClickListener {
+            val intent = Intent(this, AddGroup::class.java)
+            startActivity(intent)
+        }
+
     }
 }
