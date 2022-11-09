@@ -7,6 +7,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class SignUp : AppCompatActivity() {
 
@@ -16,6 +20,7 @@ class SignUp : AppCompatActivity() {
     private lateinit var btnsignup: Button
     private lateinit var phAuth: FirebaseAuth
 
+    private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +32,22 @@ class SignUp : AppCompatActivity() {
         edtname = findViewById(R.id.name)
         btnsignup = findViewById(R.id.signup_btn)
 
+        dbRef = FirebaseDatabase.getInstance().getReference("Users")
+
         btnsignup.setOnClickListener {
             val email = edtemail.text.toString()
             val password = edtPassword.text.toString()
 
+            val userID = dbRef.push().key!!
+
+            val sampleUser = UserModel(userID, email)
+
+            dbRef.child(userID).setValue(sampleUser)
+                .addOnCompleteListener {
+                    Toast.makeText(this, "Data Inserted successfully", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener{ err ->
+                    Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_LONG).show()
+                }
             signup(email, password)
         }
     }
