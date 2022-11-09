@@ -1,14 +1,18 @@
 package com.example.txtapp
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class DailyJournal : AppCompatActivity() {
     private lateinit var exit: Button
@@ -29,9 +33,14 @@ class DailyJournal : AppCompatActivity() {
         }
 
         saveJournal.setOnClickListener{
-            Toast.makeText(this, "Push text to the users cloud", Toast.LENGTH_SHORT).show()
+            val dailyentry = journalBody.text.toString()
+            var database = Firebase.database("https://fapwf-f785f-default-rtdb.firebaseio.com/")
+            val myRef = database.getReference("Journal Entry")
+            Toast.makeText(this@DailyJournal, dailyentry, Toast.LENGTH_SHORT).show()
+            myRef.setValue(dailyentry)
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
-
         exit.setOnClickListener{
             Toast.makeText(this, "exits this journal gives user prompt to either save or discard journal they have written", Toast.LENGTH_SHORT).show()
         }
@@ -52,6 +61,8 @@ class DailyJournal : AppCompatActivity() {
         val df = SimpleDateFormat("MM/dd/yyyy")
         return df.format(c.getTime())
     }
+
+
 
 
 
