@@ -38,11 +38,12 @@ class SignUp : AppCompatActivity() {
             val email = edtemail.text.toString()
             val password = edtPassword.text.toString()
 
-            val userID = dbRef.push().key!!
+            val userID = ""
+            val Date = ""
 
             val sampleUser = UserModel(userID, email)
 
-            dbRef.child(userID).setValue(sampleUser)
+            dbRef.child(email.replace(".", "|")).setValue(sampleUser)
                 .addOnCompleteListener {
                     Toast.makeText(this, "Data Inserted successfully", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener{ err ->

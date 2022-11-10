@@ -8,6 +8,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.Exclude
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
@@ -20,6 +25,8 @@ class DailyJournal : AppCompatActivity() {
     private lateinit var date: EditText
     private lateinit var journalTitle: EditText
     private lateinit var journalBody: EditText
+    private lateinit var database: DatabaseReference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +39,17 @@ class DailyJournal : AppCompatActivity() {
             Toast.makeText(this, "Open up to a calender to view past dates", Toast.LENGTH_SHORT).show()
         }
 
+
+
         saveJournal.setOnClickListener{
             val dailyentry = journalBody.text.toString()
-            var database = Firebase.database("https://fapwf-f785f-default-rtdb.firebaseio.com/")
-            val myRef = database.getReference("Journal Entry")
-            //Toast.makeText(this@DailyJournal, dailyentry, Toast.LENGTH_SHORT).show()
-            myRef.setValue(dailyentry)
+            database = Firebase.database.reference
+            var user = Firebase.auth.currentUser
+            var uid = user?.uid
+            var email = user?.email
+            uploadentry(uid, email, dailyentry)
+
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }//test
@@ -58,8 +70,40 @@ class DailyJournal : AppCompatActivity() {
     fun getCurrentDate(): String? {
         val c: Calendar = Calendar.getInstance()
         System.out.println("Current time => " + c.getTime())
-        val df = SimpleDateFormat("MM/dd/yyyy")
+        val df = SimpleDateFormat("MM|dd|yyyy")
         return df.format(c.getTime())
+    }
+    @IgnoreExtraProperties
+    data class Userinfo(
+        var journalentry: String,
+        var stars: MutableMap<String, Boolean> = HashMap()
+    ){
+        @Exclude
+        fun toMap(): Map<String, Any?> {
+            return mapOf(
+                "journalentry" to journalentry,
+                "stars" to stars
+            )
+        }
+    }
+
+    private fun uploadentry(uid: String?, email: String?, journalentry :String) {
+        // Create new post at /user-posts/$userid/$postid and at
+        // /posts/$postid simultaneously
+        var email = email?.replace(".", "|")
+        val key = database.child("Users/$email").push().key
+        if (key == null) {
+            Toast.makeText(this, "Sent to database sucessfully", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val entry = Userinfo(journalentry)
+        val postValues = entry.toMap()
+
+        val childUpdates = hashMapOf<String, Any>(
+            "/Users/$email/${getCurrentDate()}" to postValues,
+        )
+
+        database.updateChildren(childUpdates)
     }
 
 

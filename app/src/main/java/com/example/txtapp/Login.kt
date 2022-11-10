@@ -3,6 +3,7 @@ package com.example.txtapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -10,10 +11,10 @@ import com.google.firebase.auth.FirebaseAuth
 
 class Login : AppCompatActivity() {
 
-    private lateinit var edtemail: EditText
-    private lateinit var edtPassword: EditText
-    private lateinit var btnlogin: Button
-    private lateinit var btnsignup: Button
+    lateinit var edtemail: EditText
+    lateinit var edtPassword: EditText
+    lateinit var btnlogin: Button
+    lateinit var btnsignup: Button
 
     private lateinit var phAuth: FirebaseAuth
 
@@ -40,6 +41,7 @@ class Login : AppCompatActivity() {
         btnlogin.setOnClickListener {
             val phone = edtemail.text.toString()
             val password = edtPassword.text.toString()
+            val email = UserModel("", phone)
 
             login(phone, password);
         }
