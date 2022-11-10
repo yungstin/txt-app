@@ -26,6 +26,7 @@ class DailyJournal : AppCompatActivity() {
     private lateinit var journalTitle: EditText
     private lateinit var journalBody: EditText
     private lateinit var database: DatabaseReference
+    private lateinit var dbRef: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class DailyJournal : AppCompatActivity() {
             Toast.makeText(this, "Open up to a calender to view past dates", Toast.LENGTH_SHORT).show()
         }
 
-
+        dbRef = FirebaseDatabase.getInstance().getReference("Users")
 
         saveJournal.setOnClickListener{
             val dailyentry = journalBody.text.toString()
@@ -100,7 +101,7 @@ class DailyJournal : AppCompatActivity() {
         val postValues = entry.toMap()
 
         val childUpdates = hashMapOf<String, Any>(
-            "/Users/$email/${getCurrentDate()}" to postValues,
+            "/Users/$email/${getCurrentDate()}  " to postValues,
         )
 
         database.updateChildren(childUpdates)
