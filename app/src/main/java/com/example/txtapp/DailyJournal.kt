@@ -44,6 +44,9 @@ class DailyJournal : AppCompatActivity() {
 
         //this is the second time im doing this
         //i dont know wut what is happening
+        //testls;dkfjl;sadkfjsl;dfjsadf
+        //fj;sladkfj;lsakdfjl;asdf
+        //kljf;asdlkjfl;sdkfjl;sdkjfasdklf;
         saveJournal.setOnClickListener{
             val dailyentry = journalBody.text.toString()
             database = Firebase.database.reference
