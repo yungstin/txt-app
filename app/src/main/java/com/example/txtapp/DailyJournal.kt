@@ -1,6 +1,8 @@
 package com.example.txtapp
 
-import android.content.DialogInterface
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -28,18 +30,16 @@ class DailyJournal : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var dbRef: DatabaseReference
 
+    private var datePickerDialog: DatePickerDialog? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dailyjournal)
         wireWidgets();
-        date.setText( getCurrentDate());
-        date.setFocusable(false);//later want to set onclick to open up calender to check previous dates
-
-        date.setOnClickListener{
-            Toast.makeText(this, "Open up to a calender to view past dates", Toast.LENGTH_SHORT).show()
-        }
-
+        initDatePicker();
+        date.setText(getTodaysDate());
+        date.setFocusable(false);
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
 
         //this is the second time im doing this
@@ -60,14 +60,25 @@ class DailyJournal : AppCompatActivity() {
             Toast.makeText(this, "exits this journal gives user prompt to either save or discard journal they have written", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun wireWidgets()
-    {
-        exit = findViewById(R.id.button_exit);
-        saveJournal = findViewById(R.id.button_saveJournal);
-        date = findViewById(R.id.editTextDate_date);
-        journalTitle = findViewById(R.id.editText_Title);
-        journalBody = findViewById(R.id.editText_journalBody);
 
+    private fun initDatePicker() {
+        val dateSetListener =
+            OnDateSetListener { datePicker, year, month, day ->
+                var month = month
+                month = month + 1
+                val date = makeDateString(day, month, year)
+                this.date.setText(date)
+            }
+
+        val cal = Calendar.getInstance()
+        val year = cal[Calendar.YEAR]
+        val month = cal[Calendar.MONTH]
+        val day = cal[Calendar.DAY_OF_MONTH]
+
+        val style: Int = AlertDialog.THEME_HOLO_LIGHT
+
+        datePickerDialog = DatePickerDialog(this, style, dateSetListener, year, month, day)
+        datePickerDialog!!.getDatePicker().setMaxDate(System.currentTimeMillis());
     }
 
     fun getCurrentDate(): String? {
@@ -75,6 +86,23 @@ class DailyJournal : AppCompatActivity() {
         System.out.println("Current time => " + c.getTime())
         val df = SimpleDateFormat("MM|dd|yyyy")
         return df.format(c.getTime())
+    }
+
+    fun openDatePicker(view: View?) {
+        datePickerDialog?.show()
+    }
+
+    private fun getTodaysDate(): String? {
+        val cal = Calendar.getInstance()
+        val year = cal[Calendar.YEAR]
+        var month = cal[Calendar.MONTH]
+        month = month + 1
+        val day = cal[Calendar.DAY_OF_MONTH]
+        return makeDateString(day, month, year)
+    }
+
+    private fun makeDateString(day: Int, month: Int, year: Int): String? {
+        return "$month/$day/$year"
     }
     @IgnoreExtraProperties
     data class Userinfo(
@@ -111,6 +139,14 @@ class DailyJournal : AppCompatActivity() {
 
 
 
+    private fun wireWidgets()
+    {
+        exit = findViewById(R.id.button_exit);
+        saveJournal = findViewById(R.id.button_saveJournal);
+        date = findViewById(R.id.editTextDate_date);
+        journalTitle = findViewById(R.id.editText_Title);
+        journalBody = findViewById(R.id.editText_journalBody);
 
+    }
 
 }
