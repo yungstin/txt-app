@@ -28,6 +28,9 @@ class Login : AppCompatActivity() {
         supportActionBar?.hide()
         wireWidgets()
 
+        phAuth = FirebaseAuth.getInstance()
+        //testing
+        
         btnsignup.setOnClickListener{
             val intent = Intent(this, SignUp::class.java)
             startActivity(intent)
