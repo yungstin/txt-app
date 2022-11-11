@@ -40,8 +40,8 @@
         android:id="@+id/rv_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/addUserBtn"
-        app:layout_constraintTop_toBottomOf="@+id/dailyjournal"
+        app:layout_constraintBottom_toTopOf="@+id/button_addUser"
+        app:layout_constraintTop_toBottomOf="@+id/button_dailyjournal"
         tools:layout_editor_absoluteX="-31dp"/>
 
 

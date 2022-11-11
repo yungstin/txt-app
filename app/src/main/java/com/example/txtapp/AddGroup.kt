@@ -6,85 +6,87 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.Group
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
-import java.util.HashMap
+import com.google.firebase.ktx.Firebase
 
 class AddGroup : AppCompatActivity() {
 
-    private lateinit var addUser: EditText
-    private lateinit var addGroup: EditText
+    private lateinit var addGroupName: EditText
+    private lateinit var addGroupMember: EditText
     private lateinit var addButton: Button
-    private lateinit var dbRef: DatabaseReference
+
+    private lateinit var groupRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_group)
-        dbRef = FirebaseDatabase.getInstance().getReference("Groups")
-        wireWidgets()
+
+        addGroupName = findViewById(R.id.addGroupname)
+        addGroupMember = findViewById(R.id.addUserName)
 
 
 
+
+        groupRef = FirebaseDatabase.getInstance().getReference("Groups")
+
+        addButton = findViewById(R.id.addUserBtn)
         addButton.setOnClickListener{
-            val addgroup = addGroup.text.toString()
-            val adduser = addUser.text.toString()
-            addgroupname(addgroup, adduser)
-            // this should be moved into the main act and not in the add group
-//            val intent = Intent(this, GroupJournal::class.java)
-//            startActivity(intent)
-            val intent = Intent(this, MainActivity::class.java)
+            val groupName = addGroupName.text.toString()
+            val memberName = addGroupMember.text.toString()
+
+            groupadd(groupName,memberName)
+
+            val intent = Intent(this, GroupJournal::class.java)
             startActivity(intent)
+
+
+//                .addOnCompleteListener {
+//                    Toast.makeText(this, "Data Inserted successfully", Toast.LENGTH_LONG).show()
+//                }.addOnFailureListener{ err ->
+//                    Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_LONG).show()
+//                }
+
         }
+
+
     }
 
-    private fun wireWidgets() {
-        addGroup = findViewById(R.id.editText_groupName)
-        addUser = findViewById(R.id.editText_username)
-        addButton = findViewById(R.id.button_addUser)
-    }
 
     @IgnoreExtraProperties
     data class Userinfo(
-        var user: String?,
+        var memberName: String?,
         var stars: MutableMap<String, Boolean> = HashMap()
     ){
         @Exclude
         fun toMap(): Map<String, Any?> {
             return mapOf(
-                "$user" to user,
+                "$memberName" to memberName,
                 "stars" to stars
             )
         }
     }
 
-    private fun addgroupname(addgroup: String?, adduser: String?) {
+    private fun groupadd(groupName: String?, memberName: String?) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
-        var user = adduser?.replace(".", "|")
-        val key = dbRef.child("Groups").push().key
+        var memberName = memberName?.replace(".", "|")
+        val key = groupRef.child("Groups/$groupName").push().key
         if (key == null) {
             Toast.makeText(this, "Sent to database sucessfully", Toast.LENGTH_SHORT).show()
             return
         }
-        val entry = Userinfo(user)
+        val entry = Userinfo(memberName)
         val postValues = entry.toMap()
 
         val childUpdates = hashMapOf<String, Any>(
-            "$addgroup/$user" to postValues,
+            "/Users/$groupName" to postValues,
         )
 
-        dbRef.updateChildren(childUpdates)
+        groupRef.updateChildren(childUpdates)
     }
-
-
-
-
-
-
-
-
-
-
 }
