@@ -13,15 +13,19 @@ class GroupJournal: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_journal)
+        wireWidgets()
 
 
-        tempButton = findViewById(R.id.testButton)
 
         tempButton.setOnClickListener{
             val intent = Intent(this, AddGroup::class.java)
             startActivity(intent)
         }
 
+    }
+
+    private fun wireWidgets() {
+        tempButton = findViewById(R.id.testButton)
     }
 
 }

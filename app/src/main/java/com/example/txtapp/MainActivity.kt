@@ -15,20 +15,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        wireWidgets()
 
-        btndailyjournal = findViewById(R.id.dailyjournal)
+
 
         btndailyjournal.setOnClickListener {
             val intent = Intent(this, DailyJournal::class.java)
             startActivity(intent)
         }
 
-        btnAddGroup = findViewById(R.id.addUserBtn)
+
 
         btnAddGroup.setOnClickListener{
             val intent = Intent(this, AddGroup::class.java)
             startActivity(intent)
         }
 
+    }
+
+    private fun wireWidgets() {
+        btndailyjournal = findViewById(R.id.button_dailyjournal)
+        btnAddGroup = findViewById(R.id.button_addUser)
     }
 }

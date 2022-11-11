@@ -7,7 +7,7 @@
     tools:context=".SignUp">
 
     <ImageView
-        android:id="@+id/app_logo"
+        android:id="@+id/imageView_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/newimage"
@@ -15,24 +15,26 @@
         android:layout_marginTop="70dp"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/editText_email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/app_logo"
+        android:layout_below="@id/imageView_logo"
         android:layout_marginTop="30dp"
         android:hint="Email"
+        android:inputType="text"
         android:background="@drawable/edt_background"
         android:paddingLeft="15dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/editText_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/email"
+        android:layout_below="@id/editText_email"
         android:layout_marginTop="20dp"
         android:hint="Password"
+        android:inputType="text"
         android:background="@drawable/edt_background"
         android:paddingLeft="15dp"
         android:layout_marginLeft="25dp"
@@ -40,22 +42,23 @@
 
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/editText_username"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/password"
+        android:layout_below="@id/editText_password"
         android:layout_marginTop="20dp"
         android:hint="Name"
+        android:inputType="text"
         android:background="@drawable/edt_background"
         android:paddingLeft="15dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"/>
 
     <Button
-        android:id="@+id/signup_btn"
+        android:id="@+id/button_signup"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name"
+        android:layout_below="@id/editText_username"
         android:text="Sign Up"
         android:background="@drawable/btn_background"
         android:textColor="@color/black"
