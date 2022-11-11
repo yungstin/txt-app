@@ -43,6 +43,7 @@ class DailyJournal : AppCompatActivity() {
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
 
         //this is the second time im doing this
+        //i dont know wut what is happening
         saveJournal.setOnClickListener{
             val dailyentry = journalBody.text.toString()
             database = Firebase.database.reference
