@@ -42,6 +42,7 @@ class DailyJournal : AppCompatActivity() {
 
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
         //this is a test comment
+        //this is a new test comment
         saveJournal.setOnClickListener{
             val dailyentry = journalBody.text.toString()
             database = Firebase.database.reference
