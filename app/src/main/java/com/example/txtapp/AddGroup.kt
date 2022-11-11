@@ -6,13 +6,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.Group
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
+
 import com.google.firebase.ktx.Firebase
+
+import java.util.HashMap
+
 
 class AddGroup : AppCompatActivity() {
 
@@ -26,6 +28,7 @@ class AddGroup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_group)
 
+
         addGroupName = findViewById(R.id.addGroupname)
         addGroupMember = findViewById(R.id.addUserName)
 
@@ -35,6 +38,13 @@ class AddGroup : AppCompatActivity() {
         groupRef = FirebaseDatabase.getInstance().getReference("Groups")
 
         addButton = findViewById(R.id.addUserBtn)
+
+        dbRef = FirebaseDatabase.getInstance().getReference("Groups")
+        wireWidgets()
+
+
+
+
         addButton.setOnClickListener{
             val groupName = addGroupName.text.toString()
             val memberName = addGroupMember.text.toString()
@@ -54,6 +64,14 @@ class AddGroup : AppCompatActivity() {
         }
 
 
+    }
+
+
+
+    private fun wireWidgets() {
+        addGroup = findViewById(R.id.editText_groupName)
+        addUser = findViewById(R.id.editText_username)
+        addButton = findViewById(R.id.button_addUser)
     }
 
 

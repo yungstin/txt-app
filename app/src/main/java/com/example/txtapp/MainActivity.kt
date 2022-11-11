@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        wireWidgets()
+
 
 
 
@@ -56,5 +58,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun wireWidgets() {
+        btndailyjournal = findViewById(R.id.button_dailyjournal)
+        btnAddGroup = findViewById(R.id.button_addUser)
     }
 }
