@@ -6,14 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.Group
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import java.util.HashMap
 
 class AddGroup : AppCompatActivity() {
@@ -27,12 +23,10 @@ class AddGroup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_group)
         dbRef = FirebaseDatabase.getInstance().getReference("Groups")
-        addGroup = findViewById(R.id.addGroupname)
-        addUser = findViewById(R.id.addUserName)
+        wireWidgets()
 
 
 
-        addButton = findViewById(R.id.addUserBtn)
         addButton.setOnClickListener{
             val addgroup = addGroup.text.toString()
             val adduser = addUser.text.toString()
@@ -44,6 +38,13 @@ class AddGroup : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    private fun wireWidgets() {
+        addGroup = findViewById(R.id.editText_groupName)
+        addUser = findViewById(R.id.editText_username)
+        addButton = findViewById(R.id.button_addUser)
+    }
+
     @IgnoreExtraProperties
     data class Userinfo(
         var user: String?,
