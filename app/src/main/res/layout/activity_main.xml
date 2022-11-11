@@ -36,5 +36,13 @@
         app:srcCompat="@drawable/ic_baseline_person_add_alt_1_24"
         />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/addUserBtn"
+        app:layout_constraintTop_toBottomOf="@+id/dailyjournal"
+        tools:layout_editor_absoluteX="-31dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
