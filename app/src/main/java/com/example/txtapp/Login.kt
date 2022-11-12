@@ -3,6 +3,8 @@ package com.example.txtapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.EditText
@@ -15,7 +17,8 @@ class Login : AppCompatActivity() {
     lateinit var edtPassword: EditText
     lateinit var btnlogin: Button
     lateinit var btnsignup: Button
-
+    private val EMAIL = "email"
+    private val PASSWORD = "password"
     private lateinit var phAuth: FirebaseAuth
 
 
@@ -23,15 +26,11 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
-
+        wireWidgets()
 
         phAuth = FirebaseAuth.getInstance()
-
-        edtemail = findViewById(R.id.email)
-        edtPassword = findViewById(R.id.password)
-        btnlogin = findViewById(R.id.login_btn)
-        btnsignup = findViewById(R.id.signup_btn)
-
+        //testing
+        
         btnsignup.setOnClickListener{
             val intent = Intent(this, SignUp::class.java)
             startActivity(intent)
@@ -39,15 +38,41 @@ class Login : AppCompatActivity() {
 
 
         btnlogin.setOnClickListener {
-            val phone = edtemail.text.toString()
-            val password = edtPassword.text.toString()
-            val email = UserModel("", phone)
+            loginHandler()
+        }
 
+        edtPassword.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                loginHandler()
+                return@OnKeyListener true
+            }
+            false
+        })
+
+    }
+
+    private fun loginHandler(){
+        val phone = edtemail.text.toString()
+        val password = edtPassword.text.toString()
+        val email = UserModel("", phone)
+        try {
             login(phone, password);
+        }catch (e: Exception) {
+            createUser()
         }
 
     }
 
+    private fun createUser(){
+        val messageEmail: String = edtemail.getText().toString()
+        val messagePassword: String = edtPassword.getText().toString()
+
+        val intentSendInfo = Intent(this@Login, SignUp::class.java)
+
+        intentSendInfo.putExtra(EMAIL,messageEmail)
+        intentSendInfo.putExtra(PASSWORD,messagePassword)
+        startActivity(intentSendInfo)
+    }
 
     private fun login(email: String, password: String){
         phAuth.signInWithEmailAndPassword(email, password)
@@ -64,5 +89,12 @@ class Login : AppCompatActivity() {
                 }
             }
 
+    }
+
+    private fun wireWidgets() {
+        edtemail = findViewById(R.id.editText_email)
+        edtPassword = findViewById(R.id.editText_password)
+        btnlogin = findViewById(R.id.button_login)
+        btnsignup = findViewById(R.id.button_signup)
     }
 }

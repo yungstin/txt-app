@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/button_saveJournal"
@@ -32,6 +33,7 @@
         android:hint="11/11/1111"
         android:inputType="date"
         android:minHeight="48dp"
+        android:onClick="openDatePicker"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_exit" />
 

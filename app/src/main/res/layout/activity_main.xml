@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/dailyjournal"
+        android:id="@+id/button_dailyjournal"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
@@ -24,7 +24,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addUserBtn"
+        android:id="@+id/button_addUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +35,14 @@
         app:layout_constraintVertical_bias="0.954"
         app:srcCompat="@drawable/ic_baseline_person_add_alt_1_24"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/button_addUser"
+        app:layout_constraintTop_toBottomOf="@+id/button_dailyjournal"
+        tools:layout_editor_absoluteX="-31dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
