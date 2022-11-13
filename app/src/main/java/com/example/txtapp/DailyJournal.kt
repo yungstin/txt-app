@@ -63,12 +63,16 @@ class DailyJournal : AppCompatActivity() {
 
                 val post = dataSnapshot.child("$email").child(getCurrentDate()).child("journalentry").value
 
-                journalBody.text = post as CharSequence
+                if(post != null){
+                journalBody.text = post as CharSequence}
+
             }
             override fun onCancelled(databaseError: DatabaseError) {
             }
         }
-        Log.i("this is old", "out of the thing")
+
+
+
         dbRef.addValueEventListener(entryListener)
 
 
