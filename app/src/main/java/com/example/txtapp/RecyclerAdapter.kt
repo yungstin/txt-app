@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
 
-    private var titles = arrayOf("One", "Two", "Threee")
+    private var titles = arrayOf("this will be the read data")
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
