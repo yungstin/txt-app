@@ -5,20 +5,27 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.firebase.database.DatabaseError;
+import kotlin.collections.ArrayList
 
 
 class DailyJournal : AppCompatActivity() {
@@ -26,32 +33,58 @@ class DailyJournal : AppCompatActivity() {
     private lateinit var saveJournal: Button
     private lateinit var date: EditText
     private lateinit var journalTitle: EditText
-    private lateinit var journalBody: EditText
-    private lateinit var database: DatabaseReference
+    private lateinit var journalBody: TextView
     private lateinit var dbRef: DatabaseReference
+    private lateinit var enterytext : TextView
+    lateinit var datebasejournal : String
 
     private var datePickerDialog: DatePickerDialog? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         setContentView(R.layout.dailyjournal)
+
         wireWidgets();
         initDatePicker();
         date.setText(getTodaysDate());
         date.setFocusable(false);
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
+        var user = Firebase.auth.currentUser
+        var email = (user?.email)?.replace(".", "|")
 
-        //this is the second time im doing this
-        //i dont know wut what is happening
+        val entryListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                val dailyentry = journalBody.text.toString()
+
+                val post = dataSnapshot.child("$email").child(getCurrentDate()).child("journalentry").value
+
+                journalBody.text = post as CharSequence
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        }
+        Log.i("this is old", "out of the thing")
+        dbRef.addValueEventListener(entryListener)
+
+
+
         saveJournal.setOnClickListener{
             val dailyentry = journalBody.text.toString()
-            database = Firebase.database.reference
+            var finalentry = "$dailyentry"
+            Log.i("this is final entry", finalentry)
+
             var user = Firebase.auth.currentUser
             var uid = user?.uid
-            var email = user?.email
-            uploadentry(uid, email, dailyentry)
-
+            var email = (user?.email)?.replace(".", "|")
+            dbRef = FirebaseDatabase.getInstance().getReference("Users")
+            dbRef.child("$email").child(getCurrentDate()).child("journalentry").setValue(finalentry)
+            Log.i("this is alright i guess", "$email, ${getCurrentDate()}")
+            dbRef.removeEventListener(entryListener)
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -81,7 +114,7 @@ class DailyJournal : AppCompatActivity() {
         datePickerDialog!!.getDatePicker().setMaxDate(System.currentTimeMillis());
     }
 
-    fun getCurrentDate(): String? {
+    fun getCurrentDate(): String {
         val c: Calendar = Calendar.getInstance()
         System.out.println("Current time => " + c.getTime())
         val df = SimpleDateFormat("MM|dd|yyyy")
@@ -104,49 +137,20 @@ class DailyJournal : AppCompatActivity() {
     private fun makeDateString(day: Int, month: Int, year: Int): String? {
         return "$month/$day/$year"
     }
-    @IgnoreExtraProperties
-    data class Userinfo(
-        var journalentry: String,
-        var stars: MutableMap<String, Boolean> = HashMap()
-    ){
-        @Exclude
-        fun toMap(): Map<String, Any?> {
-            return mapOf(
-                "journalentry" to journalentry,
-                "stars" to stars
-            )
-        }
-    }
-
-    private fun uploadentry(uid: String?, email: String?, journalentry :String) {
-        // Create new post at /user-posts/$userid/$postid and at
-        // /posts/$postid simultaneously
-        var email = email?.replace(".", "|")
-        val key = database.child("Users/$email").push().key
-        if (key == null) {
-            Toast.makeText(this, "Sent to database sucessfully", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val entry = Userinfo(journalentry)
-        val postValues = entry.toMap()
-
-        val childUpdates = hashMapOf<String, Any>(
-            "/Users/$email/${getCurrentDate()}  " to postValues,
-        )
-
-        database.updateChildren(childUpdates)
-    }
 
 
 
-    private fun wireWidgets()
-    {
+
+
+
+
+    private fun wireWidgets() {
         exit = findViewById(R.id.button_exit);
         saveJournal = findViewById(R.id.button_saveJournal);
         date = findViewById(R.id.editTextDate_date);
-        journalTitle = findViewById(R.id.editText_Title);
         journalBody = findViewById(R.id.editText_journalBody);
-
     }
 
 }
+
+

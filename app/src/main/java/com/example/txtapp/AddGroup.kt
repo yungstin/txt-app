@@ -29,37 +29,27 @@ class AddGroup : AppCompatActivity() {
         setContentView(R.layout.add_group)
 
 
-        addGroupName = findViewById(R.id.addGroupname)
-        addGroupMember = findViewById(R.id.addUserName)
+        addGroupName = findViewById(R.id.editText_groupName)
+        addGroupMember = findViewById(R.id.editText_username)
 
 
 
 
         groupRef = FirebaseDatabase.getInstance().getReference("Groups")
 
-        addButton = findViewById(R.id.addUserBtn)
-
-        dbRef = FirebaseDatabase.getInstance().getReference("Groups")
-        wireWidgets()
-
-
+        addButton = findViewById(R.id.button_addUser)
 
 
         addButton.setOnClickListener{
             val groupName = addGroupName.text.toString()
             val memberName = addGroupMember.text.toString()
 
-            groupadd(groupName,memberName)
+//            groupadd(groupName,memberName)
 
+            groupRef.child("$groupName").setValue(memberName.replace(".","|"))
             val intent = Intent(this, GroupJournal::class.java)
             startActivity(intent)
 
-
-//                .addOnCompleteListener {
-//                    Toast.makeText(this, "Data Inserted successfully", Toast.LENGTH_LONG).show()
-//                }.addOnFailureListener{ err ->
-//                    Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_LONG).show()
-//                }
 
         }
 
@@ -69,42 +59,11 @@ class AddGroup : AppCompatActivity() {
 
 
     private fun wireWidgets() {
-        addGroup = findViewById(R.id.editText_groupName)
-        addUser = findViewById(R.id.editText_username)
+        addGroupName = findViewById(R.id.editText_groupName)
+        addGroupMember = findViewById(R.id.editText_username)
         addButton = findViewById(R.id.button_addUser)
     }
 
 
-    @IgnoreExtraProperties
-    data class Userinfo(
-        var memberName: String?,
-        var stars: MutableMap<String, Boolean> = HashMap()
-    ){
-        @Exclude
-        fun toMap(): Map<String, Any?> {
-            return mapOf(
-                "$memberName" to memberName,
-                "stars" to stars
-            )
-        }
-    }
 
-    private fun groupadd(groupName: String?, memberName: String?) {
-        // Create new post at /user-posts/$userid/$postid and at
-        // /posts/$postid simultaneously
-        var memberName = memberName?.replace(".", "|")
-        val key = groupRef.child("Groups/$groupName").push().key
-        if (key == null) {
-            Toast.makeText(this, "Sent to database sucessfully", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val entry = Userinfo(memberName)
-        val postValues = entry.toMap()
-
-        val childUpdates = hashMapOf<String, Any>(
-            "/Users/$groupName" to postValues,
-        )
-
-        groupRef.updateChildren(childUpdates)
-    }
 }

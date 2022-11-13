@@ -38,31 +38,17 @@
         app:layout_constraintTop_toBottomOf="@+id/button_exit" />
 
     <EditText
-        android:id="@+id/editText_Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:ems="10"
-        android:maxLength="50"
-        android:hint="Title"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColorHint="#808080"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate_date" />
-
-    <EditText
         android:id="@+id/editText_journalBody"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="409dp"
+        android:layout_height="633dp"
         android:ems="10"
         android:gravity="top|left"
-        android:hint="Write more here..."
+        android:hint="Write entry here"
         android:inputType="textMultiLine"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Title" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
