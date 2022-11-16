@@ -31,13 +31,13 @@ class SignUp : AppCompatActivity() {
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
 
 
-        edtname.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                compileUser()
-                return@OnKeyListener true
-            }
-            false
-        })
+//        edtname.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+//            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+//                compileUser()
+//                return@OnKeyListener true
+//            }
+//            false
+//        })
 
         btnsignup.setOnClickListener {
             compileUser()
@@ -47,13 +47,12 @@ class SignUp : AppCompatActivity() {
     private fun compileUser(){
         val email = edtemail.text.toString()
         val password = edtPassword.text.toString()
-
-        val userID = ""
-        val Date = ""
+        val username = edtname.text.toString()
+        val groups = ""
         //name isn't used????
-        val sampleUser = UserModel(userID, email)
 
-        dbRef.child(email.replace(".", "|")).setValue(sampleUser)
+
+        dbRef.child(email.replace(".", "|")).child("username").setValue(username)
             .addOnCompleteListener {
                 Toast.makeText(this, "Data Inserted successfully", Toast.LENGTH_LONG).show()
             }.addOnFailureListener{ err ->
