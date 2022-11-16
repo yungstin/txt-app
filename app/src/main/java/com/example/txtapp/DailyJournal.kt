@@ -63,6 +63,7 @@ class DailyJournal : AppCompatActivity() {
 
                 val post = dataSnapshot.child("$email").child(getCurrentDate()).child("journalentry").value
 
+
                 if(post != null){
                 journalBody.text = post as CharSequence}
 
@@ -70,8 +71,6 @@ class DailyJournal : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {
             }
         }
-
-
 
         dbRef.addValueEventListener(entryListener)
 
@@ -86,6 +85,7 @@ class DailyJournal : AppCompatActivity() {
             var uid = user?.uid
             var email = (user?.email)?.replace(".", "|")
             dbRef = FirebaseDatabase.getInstance().getReference("Users")
+
             dbRef.child("$email").child(getCurrentDate()).child("journalentry").setValue(finalentry)
             Log.i("this is alright i guess", "$email, ${getCurrentDate()}")
             dbRef.removeEventListener(entryListener)
