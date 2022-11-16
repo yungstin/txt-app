@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.FirebaseDatabase
@@ -35,7 +36,7 @@ class AddGroup : AppCompatActivity() {
 
 
 
-        groupRef = FirebaseDatabase.getInstance().getReference("Groups")
+        groupRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://fapwf-f785f-default-rtdb.firebaseio.com/")
 
         addButton = findViewById(R.id.button_addUser)
 
@@ -43,14 +44,12 @@ class AddGroup : AppCompatActivity() {
         addButton.setOnClickListener{
             val groupName = addGroupName.text.toString()
             val memberName = addGroupMember.text.toString()
-
-//            groupadd(groupName,memberName)
-
-            groupRef.child("$groupName").setValue(memberName.replace(".","|"))
-            val intent = Intent(this, GroupJournal::class.java)
+            var user = Firebase.auth.currentUser
+            var email = user?.email?.replace(".", "|")
+            groupRef.child("Users").child(email as String).child("groups").child(groupName).setValue("")
+            groupRef.child("Groups").child(groupName).child(memberName.replace(".","|")).setValue("")
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-
-
         }
 
 
@@ -63,7 +62,4 @@ class AddGroup : AppCompatActivity() {
         addGroupMember = findViewById(R.id.editText_username)
         addButton = findViewById(R.id.button_addUser)
     }
-
-
-
 }
