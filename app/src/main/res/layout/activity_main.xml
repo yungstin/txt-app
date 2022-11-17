@@ -37,12 +37,15 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button_addUser"
-        app:layout_constraintTop_toBottomOf="@+id/button_dailyjournal"
-        tools:layout_editor_absoluteX="-31dp"/>
+        android:id="@+id/recyclerview"
+        android:layout_width="414dp"
+        android:layout_height="406dp"
+        app:layout_constraintBottom_toTopOf="@id/button_addUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_dailyjournal"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/userlayout"
+        tools:itemCount="17"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

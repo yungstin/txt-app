@@ -1,43 +1,60 @@
-package com.example.txtapp
-
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.txtapp.AddGroup
+import com.example.txtapp.DailyJournal
+import com.example.txtapp.R
 
-class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(    private var titles: List<String>,
+                          private var details: List<String>,
+                          private var images:List<Int>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
+    // create new views
+    // Holds the views for adding it to image and text
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val itemTitle: TextView = itemView.findViewById(R.id.tv_title)
+        val itemDetail: TextView = itemView.findViewById(R.id.tv_description)
+        val itemPicture: ImageView = itemView.findViewById(R.id.iv_Image)
 
-    private var titles = arrayOf("this will be the read data")
+        init {
+            itemView.setOnClickListener{ v: View ->
+                val position: Int = adapterPosition
+                if(position == 0)
+                {
 
+                }
+
+                Toast.makeText(itemView.context, "You clicekd on ${position+1}", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.group_entry_journals, parent, false)
-        return ViewHolder(v)
-
+        // inflates the card_view_design view
+        // that is used to hold list item
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.group_entry_journals, parent, false)
+        return ViewHolder(view)
     }
 
-
+    // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemtitle.text = titles[position]
+        holder.itemTitle.text = titles[position]
+        holder.itemDetail.text = details[position]
+        holder.itemPicture.setImageResource(images[position])
     }
 
+    // return the number of the items in the list
     override fun getItemCount(): Int {
         return titles.size
     }
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    {
-        val itemtitle: TextView
-        init {
-            itemtitle = itemView.findViewById(R.id.tv_title)
-            itemView.setOnClickListener{
-                val position: Int = adapterPosition
 
-                Toast.makeText(itemView.context, "you clicked on ${titles[position]}", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
+
 }
