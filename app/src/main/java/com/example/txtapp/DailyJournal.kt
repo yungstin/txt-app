@@ -61,14 +61,14 @@ class DailyJournal : AppCompatActivity() {
                 // Get Post object and use the values to update the UI
                 val dailyentry = journalBody.text.toString()
 
-                val post = dataSnapshot.child("$email").child("entries").child(getCurrentDate()).child("journalentry").value
-                if(post != null){
-                journalBody.text = post as CharSequence}
+                val post = dataSnapshot.child("$email").child(getCurrentDate()).child("journalentry").value
+
+                journalBody.text = post as CharSequence
             }
             override fun onCancelled(databaseError: DatabaseError) {
             }
         }
-
+        Log.i("this is old", "out of the thing")
         dbRef.addValueEventListener(entryListener)
 
 
@@ -76,11 +76,14 @@ class DailyJournal : AppCompatActivity() {
         saveJournal.setOnClickListener{
             val dailyentry = journalBody.text.toString()
             var finalentry = "$dailyentry"
+            Log.i("this is final entry", finalentry)
+
             var user = Firebase.auth.currentUser
             var uid = user?.uid
             var email = (user?.email)?.replace(".", "|")
             dbRef = FirebaseDatabase.getInstance().getReference("Users")
-            dbRef.child("$email").child("entries").child(getCurrentDate()).child("journalentry").setValue(finalentry)
+            dbRef.child("$email").child(getCurrentDate()).child("journalentry").setValue(finalentry)
+            Log.i("this is alright i guess", "$email, ${getCurrentDate()}")
             dbRef.removeEventListener(entryListener)
 
             val intent = Intent(this, MainActivity::class.java)
@@ -149,3 +152,5 @@ class DailyJournal : AppCompatActivity() {
     }
 
 }
+
+
