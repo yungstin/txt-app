@@ -62,8 +62,8 @@ class DailyJournal : AppCompatActivity() {
                 val dailyentry = journalBody.text.toString()
 
                 val post = dataSnapshot.child("$email").child(getCurrentDate()).child("journalentry").value
-
-                journalBody.text = post as CharSequence
+                if (post != null){
+                    journalBody.text = post as CharSequence}
             }
             override fun onCancelled(databaseError: DatabaseError) {
             }
@@ -152,5 +152,4 @@ class DailyJournal : AppCompatActivity() {
     }
 
 }
-
 
