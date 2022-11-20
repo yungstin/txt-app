@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_dailyjournal"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/userlayout" />
+        tools:listitem="@layout/group_entry_journals" />
 
     <TextView
         android:id="@+id/test_TextView"

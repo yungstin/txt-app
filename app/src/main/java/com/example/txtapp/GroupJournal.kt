@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class GroupJournal: AppCompatActivity() {
 
-    private lateinit var tempButton: Button
+    private lateinit var saveButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class GroupJournal: AppCompatActivity() {
 
 
 
-        tempButton.setOnClickListener{
+        saveButton.setOnClickListener{
             val intent = Intent(this, AddGroup::class.java)
             startActivity(intent)
         }
@@ -25,7 +25,7 @@ class GroupJournal: AppCompatActivity() {
     }
 
     private fun wireWidgets() {
-        tempButton = findViewById(R.id.testButton)
+        saveButton = findViewById(R.id.testButton)
     }
 
 }
