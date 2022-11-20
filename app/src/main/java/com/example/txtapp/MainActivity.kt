@@ -12,8 +12,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.userlayout.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var btndailyjournal: Button
